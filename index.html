@@ -2,73 +2,101 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>❤️ Love ❤️</title>
+<title>حكايتنا ❤️</title>
 
 <style>
+*{
+  box-sizing:border-box;
+  font-family:'Tahoma',sans-serif;
+}
 body{
   margin:0;
   min-height:100vh;
-  background:linear-gradient(180deg,#ff4d6d,#c9184a);
-  font-family:Tahoma,sans-serif;
+  background:linear-gradient(180deg,#6a040f,#9d0208,#d00000);
+  color:#fff;
   display:flex;
   justify-content:center;
   align-items:center;
-  color:white;
-  direction:rtl;
+  overflow-x:hidden;
 }
-
-.hidden{display:none;}
+body::before{
+  content:"❤️ 💕 💖 💘 💗";
+  position:fixed;
+  top:20%;
+  font-size:60px;
+  opacity:.12;
+  animation:float 18s linear infinite;
+  white-space:nowrap;
+}
+@keyframes float{
+  from{transform:translateX(-120%);}
+  to{transform:translateX(120%);}
+}
 
 .card{
-  background:rgba(0,0,0,0.35);
+  background:rgba(0,0,0,.35);
   padding:25px;
   border-radius:20px;
+  width:360px;
   text-align:center;
-  width:340px;
 }
 
-input,button{
+.hidden{display:none}
+
+input{
   width:100%;
-  padding:12px;
-  margin-top:10px;
+  padding:14px;
+  border-radius:14px;
   border:none;
-  border-radius:12px;
   font-size:16px;
+  margin-top:10px;
 }
-
 button{
-  background:#ff758f;
+  width:100%;
+  padding:14px;
+  margin-top:15px;
+  border-radius:16px;
+  border:none;
+  background:#ff4d6d;
   color:white;
+  font-size:17px;
 }
 
 .counter{
   display:flex;
+  flex-wrap:wrap;
   justify-content:space-between;
-  margin:15px 0;
+  margin-top:15px;
 }
-
 .box{
-  background:rgba(255,255,255,0.15);
+  width:30%;
+  margin-bottom:10px;
+  background:rgba(255,255,255,.18);
   padding:10px;
-  border-radius:10px;
-  width:22%;
+  border-radius:14px;
 }
-
 .box span{
   display:block;
   font-size:20px;
   font-weight:bold;
 }
 
-img{
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:20px;
+}
+.gallery img{
   width:100%;
-  border-radius:15px;
-  margin-top:10px;
+  border-radius:14px;
 }
 
-audio{
-  width:100%;
-  margin:15px 0;
+.message{
+  margin-top:20px;
+  font-size:15px;
+  line-height:1.7;
+  opacity:.95;
 }
 </style>
 </head>
@@ -78,15 +106,14 @@ audio{
 <!-- شاشة الباسورد -->
 <div class="card" id="lock">
   <h2>❤️ عيد الحب ❤️</h2>
-  <input type="password" id="pass" placeholder="اكتب كلمة السر">
-  <p>اضغطي يا ندوشة ❤️</p>
-  <button onclick="check()">دخول</button>
+  <p>اكتبي كلمة السر</p>
+  <input type="password" id="pass">
+  <button onclick="check()">اضغطي ياندوشة</button>
 </div>
 
 <!-- المحتوى -->
 <div class="card hidden" id="content">
-
-  <h3>عدّى على حبنا ❤️</h3>
+  <h2>بداية حكايتنا 😍</h2>
 
   <div class="counter">
     <div class="box"><span id="days">0</span>يوم</div>
@@ -95,58 +122,62 @@ audio{
     <div class="box"><span id="seconds">0</span>ثانية</div>
   </div>
 
-  <!-- الأغنية -->
-  <audio autoplay controls>
-    <source src="song.mp3" type="audio/mpeg">
-  </audio>
-
   <!-- الصور -->
-  <img src="img1.jpg">
-  <img src="img2.jpg">
-  <img src="img3.jpg">
-  <img src="img4.jpg">
+  <div class="gallery">
+    <img src="img1.jpg">
+    <img src="img2.jpg">
+    <img src="img3.jpg">
+    <img src="img4.jpg">
+  </div>
 
-  <button onclick="showMsg()">اضغطي هنا ❤️</button>
-  <p id="msg" class="hidden">✍️ اكتب رسالتك هنا</p>
-
+  <!-- الرسالة -->
+  <div class="message">
+    انا مجنون بيكي رسمي ❤️<br>
+    حبي ليكي كل يوم بيزيد<br>
+    ومهما يعدي وقت… انتي دايمًا البداية والنهاية
+  </div>
 </div>
 
+<!-- الأغنية -->
+<audio id="bgMusic" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-const PASSWORD = "227";
-const startDate = new Date("2025-07-22T00:00:00");
+const PASSWORD="227";
+const startDate=new Date("2025-07-22T00:00:00");
 
 function check(){
-  if(document.getElementById("pass").value === PASSWORD){
+  if(document.getElementById("pass").value===PASSWORD){
     document.getElementById("lock").classList.add("hidden");
     document.getElementById("content").classList.remove("hidden");
   }
 }
 
 function update(){
-  const now = new Date();
-  let diff = now - startDate;
-  if(diff < 0) diff = 0;
+  let diff=new Date()-startDate;
+  if(diff<0) diff=0;
 
-  const days = Math.floor(diff / (1000*60*60*24));
-  diff %= (1000*60*60*24);
-  const hours = Math.floor(diff / (1000*60*60));
-  diff %= (1000*60*60);
-  const minutes = Math.floor(diff / (1000*60));
-  const seconds = Math.floor((diff % (1000*60)) / 1000);
+  const days=Math.floor(diff/(1000*60*60*24));
+  diff%=1000*60*60*24;
+  const hours=Math.floor(diff/(1000*60*60));
+  diff%=1000*60*60;
+  const minutes=Math.floor(diff/(1000*60));
+  const seconds=Math.floor((diff%(1000*60))/1000);
 
-  document.getElementById("days").innerText = days;
-  document.getElementById("hours").innerText = hours;
-  document.getElementById("minutes").innerText = minutes;
-  document.getElementById("seconds").innerText = seconds;
+  daysEl.innerText=days;
+  hoursEl.innerText=hours;
+  minutesEl.innerText=minutes;
+  secondsEl.innerText=seconds;
 }
-
 setInterval(update,1000);
 update();
 
-function showMsg(){
-  document.getElementById("msg").classList.remove("hidden");
-}
+document.addEventListener("click",()=>{
+  const m=document.getElementById("bgMusic");
+  if(m.paused) m.play();
+},{once:true});
 </script>
 
 </body>
-    </html>
+  </html>
