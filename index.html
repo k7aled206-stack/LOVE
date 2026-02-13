@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>LOVE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body{
+      margin:0;
+      font-family: Arial, sans-serif;
+      background:#000;
+      color:#fff;
+      text-align:center;
+    }
+    .lock{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+    }
+    input{
+      padding:10px;
+      font-size:18px;
+      text-align:center;
+      border-radius:8px;
+      border:none;
+      outline:none;
+      margin-top:10px;
+    }
+    button{
+      margin-top:15px;
+      padding:10px 25px;
+      font-size:18px;
+      border:none;
+      border-radius:10px;
+      background:#ff2d75;
+      color:#fff;
+    }
+    .content{
+      display:none;
+      padding:20px;
+    }
+    .counter{
+      font-size:20px;
+      margin:20px 0;
+    }
+    .gallery img{
+      width:100%;
+      max-width:300px;
+      margin:10px auto;
+      border-radius:15px;
+      display:block;
+    }
+    .msgBtn{
+      background:#ff2d75;
+      margin-top:20px;
+    }
+    .finalMsg{
+      display:none;
+      margin-top:20px;
+      font-size:18px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- شاشة الباسورد -->
+<div class="lock" id="lock">
+  <h2>🔒 اكتب الباسورد</h2>
+  <input type="password" id="pass" placeholder="••••">
+  <button onclick="checkPass()">دخول</button>
+</div>
+
+<!-- المحتوى -->
+<div class="content" id="content">
+  <h2>❤️</h2>
+
+  <div class="counter" id="counter"></div>
+
+  <!-- صور (غير الروابط بعدين براحتك) -->
+  <div class="gallery">
+    <img src="https://picsum.photos/300/400?1">
+    <img src="https://picsum.photos/300/400?2">
+    <img src="https://picsum.photos/300/400?3">
+  </div>
+
+  <!-- زر الرسالة -->
+  <button class="msgBtn" onclick="showMsg()">اضغط هنا</button>
+
+  <!-- الرسالة (إنت هتكتبها) -->
+  <div class="finalMsg" id="finalMsg">
+    ✍️ اكتب رسالتك هنا
+  </div>
+</div>
+
+<script>
+  // الباسورد
+  function checkPass(){
+    const p = document.getElementById("pass").value;
+    if(p === "227"){
+      document.getElementById("lock").style.display="none";
+      document.getElementById("content").style.display="block";
+    }else{
+      alert("باسورد غلط");
+    }
+  }
+
+  // العداد من 22/7/2025
+  const startDate = new Date("2025-07-22T00:00:00");
+
+  function updateCounter(){
+    const now = new Date();
+    let diff = now - startDate;
+
+    let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    let minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+    document.getElementById("counter").innerHTML =
+      days + " يوم 💕 " + hours + " ساعة ⏰ " + minutes + " دقيقة";
+  }
+
+  setInterval(updateCounter,1000);
+  updateCounter();
+
+  function showMsg(){
+    document.getElementById("finalMsg").style.display="block";
+  }
+</script>
+
+</body>
+</html>
