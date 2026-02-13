@@ -2,148 +2,150 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>عيد الحب ❤️</title>
+<title>❤️ Love ❤️</title>
 
 <style>
-body {
-    margin: 0;
-    height: 100vh;
-    font-family: 'Tahoma', sans-serif;
-    background: linear-gradient(180deg,#ff4d6d,#c9184a);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    overflow: hidden;
+body{
+  margin:0;
+  min-height:100vh;
+  background:linear-gradient(180deg,#ff4d6d,#c9184a);
+  font-family:Tahoma,sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  direction:rtl;
 }
 
-/* قلوب في الخلفية */
-body::before {
-    content: "❤️ 💖 💕 💗 💘 💝";
-    position: absolute;
-    font-size: 60px;
-    opacity: 0.15;
-    animation: float 15s linear infinite;
-    white-space: nowrap;
+.hidden{display:none;}
+
+.card{
+  background:rgba(0,0,0,0.35);
+  padding:25px;
+  border-radius:20px;
+  text-align:center;
+  width:340px;
 }
 
-@keyframes float {
-    from { transform: translateX(-100%); }
-    to { transform: translateX(100%); }
+input,button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
 }
 
-.card {
-    background: rgba(0,0,0,0.35);
-    padding: 25px;
-    border-radius: 18px;
-    text-align: center;
-    width: 320px;
-    z-index: 2;
+button{
+  background:#ff758f;
+  color:white;
 }
 
-input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    margin: 10px 0;
-    font-size: 16px;
+.counter{
+  display:flex;
+  justify-content:space-between;
+  margin:15px 0;
 }
 
-button {
-    width: 100%;
-    padding: 12px;
-    border-radius: 12px;
-    border: none;
-    background: #ff758f;
-    color: white;
-    font-size: 16px;
+.box{
+  background:rgba(255,255,255,0.15);
+  padding:10px;
+  border-radius:10px;
+  width:22%;
 }
 
-.hidden {
-    display: none;
+.box span{
+  display:block;
+  font-size:20px;
+  font-weight:bold;
 }
 
-.counter {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
+img{
+  width:100%;
+  border-radius:15px;
+  margin-top:10px;
 }
 
-.box {
-    background: rgba(255,255,255,0.15);
-    padding: 10px;
-    border-radius: 10px;
-    width: 22%;
-}
-
-.box span {
-    display: block;
-    font-size: 20px;
-    font-weight: bold;
+audio{
+  width:100%;
+  margin:15px 0;
 }
 </style>
 </head>
 
 <body>
 
-<!-- شاشة القفل -->
+<!-- شاشة الباسورد -->
 <div class="card" id="lock">
-    <h2>❤️ عيد الحب ❤️</h2>
-    <p>اكتب كلمة السر</p>
-    <input type="password" id="pass">
-    <button onclick="check()">دخول</button>
+  <h2>❤️ عيد الحب ❤️</h2>
+  <input type="password" id="pass" placeholder="اكتب كلمة السر">
+  <p>اضغطي يا ندوشة ❤️</p>
+  <button onclick="check()">دخول</button>
 </div>
 
 <!-- المحتوى -->
 <div class="card hidden" id="content">
-    <h2>عدّى على حبنا ❤️</h2>
 
-    <div class="counter">
-        <div class="box"><span id="days">0</span>يوم</div>
-        <div class="box"><span id="hours">0</span>ساعة</div>
-        <div class="box"><span id="minutes">0</span>دقيقة</div>
-        <div class="box"><span id="seconds">0</span>ثانية</div>
-    </div>
+  <h3>عدّى على حبنا ❤️</h3>
+
+  <div class="counter">
+    <div class="box"><span id="days">0</span>يوم</div>
+    <div class="box"><span id="hours">0</span>ساعة</div>
+    <div class="box"><span id="minutes">0</span>دقيقة</div>
+    <div class="box"><span id="seconds">0</span>ثانية</div>
+  </div>
+
+  <!-- الأغنية -->
+  <audio autoplay controls>
+    <source src="song.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- الصور -->
+  <img src="img1.jpg">
+  <img src="img2.jpg">
+  <img src="img3.jpg">
+
+  <button onclick="showMsg()">اضغطي هنا ❤️</button>
+  <p id="msg" class="hidden">✍️ اكتب رسالتك هنا</p>
+
 </div>
 
 <script>
 const PASSWORD = "227";
-
-/* تاريخ البداية */
 const startDate = new Date("2025-07-22T00:00:00");
 
 function check(){
-    if(document.getElementById("pass").value === PASSWORD){
-        document.getElementById("lock").classList.add("hidden");
-        document.getElementById("content").classList.remove("hidden");
-    }
+  if(document.getElementById("pass").value === PASSWORD){
+    document.getElementById("lock").classList.add("hidden");
+    document.getElementById("content").classList.remove("hidden");
+  }
 }
 
 function update(){
-    const now = new Date();
-    let diff = now - startDate;
+  const now = new Date();
+  let diff = now - startDate;
+  if(diff < 0) diff = 0;
 
-    if(diff < 0) diff = 0;
+  const days = Math.floor(diff / (1000*60*60*24));
+  diff %= (1000*60*60*24);
+  const hours = Math.floor(diff / (1000*60*60));
+  diff %= (1000*60*60);
+  const minutes = Math.floor(diff / (1000*60));
+  const seconds = Math.floor((diff % (1000*60)) / 1000);
 
-    const days = Math.floor(diff / (1000*60*60*24));
-    diff %= (1000*60*60*24);
-
-    const hours = Math.floor(diff / (1000*60*60));
-    diff %= (1000*60*60);
-
-    const minutes = Math.floor(diff / (1000*60));
-    const seconds = Math.floor((diff % (1000*60)) / 1000);
-
-    document.getElementById("days").innerText = days;
-    document.getElementById("hours").innerText = hours;
-    document.getElementById("minutes").innerText = minutes;
-    document.getElementById("seconds").innerText = seconds;
+  document.getElementById("days").innerText = days;
+  document.getElementById("hours").innerText = hours;
+  document.getElementById("minutes").innerText = minutes;
+  document.getElementById("seconds").innerText = seconds;
 }
 
 setInterval(update,1000);
 update();
+
+function showMsg(){
+  document.getElementById("msg").classList.remove("hidden");
+}
 </script>
 
 </body>
-  </html>
+    </html>
