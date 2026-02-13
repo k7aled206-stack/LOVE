@@ -1,133 +1,149 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <title>LOVE</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body{
-      margin:0;
-      font-family: Arial, sans-serif;
-      background:#000;
-      color:#fff;
-      text-align:center;
-    }
-    .lock{
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      height:100vh;
-    }
-    input{
-      padding:10px;
-      font-size:18px;
-      text-align:center;
-      border-radius:8px;
-      border:none;
-      outline:none;
-      margin-top:10px;
-    }
-    button{
-      margin-top:15px;
-      padding:10px 25px;
-      font-size:18px;
-      border:none;
-      border-radius:10px;
-      background:#ff2d75;
-      color:#fff;
-    }
-    .content{
-      display:none;
-      padding:20px;
-    }
-    .counter{
-      font-size:20px;
-      margin:20px 0;
-    }
-    .gallery img{
-      width:100%;
-      max-width:300px;
-      margin:10px auto;
-      border-radius:15px;
-      display:block;
-    }
-    .msgBtn{
-      background:#ff2d75;
-      margin-top:20px;
-    }
-    .finalMsg{
-      display:none;
-      margin-top:20px;
-      font-size:18px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>عيد الحب ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Tahoma', sans-serif;
+    background: linear-gradient(180deg,#ff4d6d,#c9184a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    overflow: hidden;
+}
+
+/* قلوب في الخلفية */
+body::before {
+    content: "❤️ 💖 💕 💗 💘 💝";
+    position: absolute;
+    font-size: 60px;
+    opacity: 0.15;
+    animation: float 15s linear infinite;
+    white-space: nowrap;
+}
+
+@keyframes float {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100%); }
+}
+
+.card {
+    background: rgba(0,0,0,0.35);
+    padding: 25px;
+    border-radius: 18px;
+    text-align: center;
+    width: 320px;
+    z-index: 2;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    background: #ff758f;
+    color: white;
+    font-size: 16px;
+}
+
+.hidden {
+    display: none;
+}
+
+.counter {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.box {
+    background: rgba(255,255,255,0.15);
+    padding: 10px;
+    border-radius: 10px;
+    width: 22%;
+}
+
+.box span {
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+}
+</style>
 </head>
+
 <body>
 
-<!-- شاشة الباسورد -->
-<div class="lock" id="lock">
-  <h2>🔒 اكتب الباسورد</h2>
-  <input type="password" id="pass" placeholder="••••">
-  <button onclick="checkPass()">دخول</button>
+<!-- شاشة القفل -->
+<div class="card" id="lock">
+    <h2>❤️ عيد الحب ❤️</h2>
+    <p>اكتب كلمة السر</p>
+    <input type="password" id="pass">
+    <button onclick="check()">دخول</button>
 </div>
 
 <!-- المحتوى -->
-<div class="content" id="content">
-  <h2>❤️</h2>
+<div class="card hidden" id="content">
+    <h2>عدّى على حبنا ❤️</h2>
 
-  <div class="counter" id="counter"></div>
-
-  <!-- صور (غير الروابط بعدين براحتك) -->
-  <div class="gallery">
-    <img src="https://picsum.photos/300/400?1">
-    <img src="https://picsum.photos/300/400?2">
-    <img src="https://picsum.photos/300/400?3">
-  </div>
-
-  <!-- زر الرسالة -->
-  <button class="msgBtn" onclick="showMsg()">اضغط هنا</button>
-
-  <!-- الرسالة (إنت هتكتبها) -->
-  <div class="finalMsg" id="finalMsg">
-    ✍️ اكتب رسالتك هنا
-  </div>
+    <div class="counter">
+        <div class="box"><span id="days">0</span>يوم</div>
+        <div class="box"><span id="hours">0</span>ساعة</div>
+        <div class="box"><span id="minutes">0</span>دقيقة</div>
+        <div class="box"><span id="seconds">0</span>ثانية</div>
+    </div>
 </div>
 
 <script>
-  // الباسورد
-  function checkPass(){
-    const p = document.getElementById("pass").value;
-    if(p === "227"){
-      document.getElementById("lock").style.display="none";
-      document.getElementById("content").style.display="block";
-    }else{
-      alert("باسورد غلط");
+const PASSWORD = "227";
+
+/* تاريخ البداية */
+const startDate = new Date("2025-07-22T00:00:00");
+
+function check(){
+    if(document.getElementById("pass").value === PASSWORD){
+        document.getElementById("lock").classList.add("hidden");
+        document.getElementById("content").classList.remove("hidden");
     }
-  }
+}
 
-  // العداد من 22/7/2025
-  const startDate = new Date("2025-07-22T00:00:00");
-
-  function updateCounter(){
+function update(){
     const now = new Date();
     let diff = now - startDate;
 
-    let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    let minutes = Math.floor((diff / (1000 * 60)) % 60);
+    if(diff < 0) diff = 0;
 
-    document.getElementById("counter").innerHTML =
-      days + " يوم 💕 " + hours + " ساعة ⏰ " + minutes + " دقيقة";
-  }
+    const days = Math.floor(diff / (1000*60*60*24));
+    diff %= (1000*60*60*24);
 
-  setInterval(updateCounter,1000);
-  updateCounter();
+    const hours = Math.floor(diff / (1000*60*60));
+    diff %= (1000*60*60);
 
-  function showMsg(){
-    document.getElementById("finalMsg").style.display="block";
-  }
+    const minutes = Math.floor(diff / (1000*60));
+    const seconds = Math.floor((diff % (1000*60)) / 1000);
+
+    document.getElementById("days").innerText = days;
+    document.getElementById("hours").innerText = hours;
+    document.getElementById("minutes").innerText = minutes;
+    document.getElementById("seconds").innerText = seconds;
+}
+
+setInterval(update,1000);
+update();
 </script>
 
 </body>
-</html>
+  </html>
