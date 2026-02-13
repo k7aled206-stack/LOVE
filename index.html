@@ -122,14 +122,14 @@ audio{
 <script>
 const PASSWORD = "22/7";
 const startDate = new Date("2025-07-22T00:00:00");
-
 function check(){
   if(document.getElementById("pass").value === PASSWORD){
     document.getElementById("lock").classList.add("hidden");
     document.getElementById("content").classList.remove("hidden");
-  }
-}
 
+    document.getElementById("music").play();
+  }
+  }
 function update(){
   const now = new Date();
   let diff = now - startDate;
